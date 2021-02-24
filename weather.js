@@ -1,5 +1,3 @@
-const { request } = require('http');
-const https = require('https');
 const http = require('http');
 const api = require('./api.json');
 
@@ -8,11 +6,14 @@ function printError(text, error) {
     console.error(text, error);
 }
 
-//print out func
+//print out function
 function printOut(w) {
     try{
+    // convert kelvin to celsius
     const celsius = Math.floor(w.main.feels_like - 273.15);
+    //set message
     const message = `Current temprature in ${w.name} is ${celsius} celsius`;
+    // console the message
     console.log(message);
     } catch(error) {
         console.log(`${w.name} not found`)
@@ -20,10 +21,11 @@ function printOut(w) {
     
 }
 
-
+//get query function
 function get(query) {
     const readableQuery = query.replace('_', ' ');
     try {
+        //get request
         const request = https.get(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${api.key}`,
         response => {
             if(response.statusCode === 200) {
@@ -50,5 +52,5 @@ function get(query) {
     }
    
 }
-
+// exopert module
 module.exports.get = get;
